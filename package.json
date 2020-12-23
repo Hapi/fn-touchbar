@@ -18,11 +18,11 @@
 	"contributes": {
 		"commands": [
 			{
-				"command": "extension.action.navigateBack",
+				"command": "com.harrihalttunen.fnTouchbar.action.navigateBack",
 				"title": "<"
 			},
 			{
-				"command": "extension.action.navigateForward",
+				"command": "com.harrihalttunen.fnTouchbar.action.navigateForward",
 				"title": ">"
 			},
 			{
@@ -38,11 +38,11 @@
 				"title": "👁ƒ()"
 			},
 			{
-				"command": "extension.debug.start",
+				"command": "com.harrihalttunen.fnTouchbar.debug.start",
 				"title": "▶"
 			},
 			{
-				"command": "extension.debug.run",
+				"command": "com.harrihalttunen.fnTouchbar.debug.run",
 				"title": "▷"
 			},
 			{
@@ -69,12 +69,12 @@
 		"menus": {
 			"touchBar": [
 				{
-					"command": "extension.action.navigateBack",
+					"command": "com.harrihalttunen.fnTouchbar.action.navigateBack",
 					"group": "_navigation@1",
 					"when": "config.fnTouchBar.navigateBack && !inDebugMode && editorFocus"
 				},
 				{
-					"command": "extension.action.navigateForward",
+					"command": "com.harrihalttunen.fnTouchbar.action.navigateForward",
 					"group": "_navigation@2",
 					"when": "config.fnTouchBar.navigateForward && !inDebugMode && editorFocus"
 				},
@@ -94,12 +94,12 @@
 					"when": "config.fnTouchBar.peekDefinition && !inDebugMode && editorFocus"
 				},
 				{
-					"command": "extension.debug.start",
+					"command": "com.harrihalttunen.fnTouchbar.debug.start",
 					"group": "debug@1",
 					"when": "config.fnTouchBar.debug.start && !inDebugMode && editorFocus"
 				},
 				{
-					"command": "extension.debug.run",
+					"command": "com.harrihalttunen.fnTouchbar.debug.run",
 					"group": "debug@2",
 					"when": "config.fnTouchBar.debug.run && !inDebugMode && editorFocus"
 				},
