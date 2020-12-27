@@ -1,0 +1,513 @@
+---
+name: fn-touchbar
+repository:
+  type: git
+  url: https://github.com/hapi/fn-touchbar
+version: 1.0.0
+lisence: MIT
+displayName: fn Touchbar
+description: The most common function keys (and some others) are put directly to Touchbar.
+publisher: Hapi
+icon: fn-touchbar.png
+keywords:
+  - Touchbar
+  - touch bar
+  - Macbook Pro
+  - function keys
+  - vscode
+  - visual studio code
+engines:
+  vscode: "^1.52.0"
+categories:
+- Other
+activationEvents:
+- "*"
+main: "./out/extension.js"
+contributes:
+  commands:
+    #
+    #  Navigate back and forward.
+    #
+    - command: &_navigateBack com.harrihalttunen.fnTouchbar.action.navigateBack
+      title: "<"
+    - command: &_navigateForward com.harrihalttunen.fnTouchbar.action.navigateForward
+      title: ">"
+
+    #
+    #  Group tools
+    #
+    - command: &_showDebugTools com.harrihalttunen.fnTouchbar.showDebugTools
+      title: "\U0001F41E"
+    - command: &_showNavigationTools com.harrihalttunen.fnTouchbar.showNavigationTools
+      title: "⎈"
+    - command: &_showDefinitionTools com.harrihalttunen.fnTouchbar.showDefinitionTools
+      title: ƒ()
+    - command: &_showMiscTools com.harrihalttunen.fnTouchbar.showMiscTools
+      title: "⋯"
+
+    #
+    #  Debug tools
+    #
+    - command: &_hideDebugTools com.harrihalttunen.fnTouchbar.hideDebugTools
+      title: "\U0001F167"
+    - command: &_debugStart com.harrihalttunen.fnTouchbar.debug.start
+      title: "▶"
+    - command: &_debugRun com.harrihalttunen.fnTouchbar.debug.run
+      title: "▷"
+    - command: &_toggleBreakpoint editor.debug.action.toggleBreakpoint
+      title: "●"
+    - command: &_addLogPoint editor.debug.action.addLogPoint
+      title: "♦"
+    - command: &_debugView workbench.view.debug
+      title: "◧\U0001F41E"
+
+    #
+    #  Navigation tools
+    #
+    - command: &_hideNavigationTools com.harrihalttunen.fnTouchbar.hideNavigationTools
+      title: "\U0001F167"
+    - command: &_previousSelectionFindAction editor.action.previousSelectionMatchFindAction
+      title: "←\U0001F50D"
+    - command: &_nextSelectionFindAction editor.action.nextMatchFindAction
+      title: "\U0001F50E→"
+    - command: &_searchView workbench.view.search
+      title: "◧\U0001F50E"
+    - command: &_prevInFiles editor.action.marker.prevInFiles
+      title: "←⚠"
+    - command: &_nextInFiles editor.action.marker.nextInFiles
+      title: "⚠→"
+    - command: &_showErrorsWarnings workbench.action.showErrorsWarnings
+      title: "⚠⬓"
+
+    #
+    #  Definition tools
+    #
+    - command: &_hideDefinitionTools com.harrihalttunen.fnTouchbar.hideDefinitionTools
+      title: "\U0001F167"
+    - command: &_revealDefinition editor.action.revealDefinition
+      title: "→ƒ()"
+    - command: &_goToReferences editor.action.goToReferences
+      title: ƒ()→
+    - command: &_peekDefinition editor.action.peekDefinition
+      title: "\U0001F441ƒ()"
+    - command: &_findReferences references-view.findReferences
+      title: "\U0001F50Eƒ()"
+    - command: &_revealDefinitionAside editor.action.revealDefinitionAside
+      title: ƒ()◨
+    - command: &_findImplementations references-view.findImplementations
+      title: ƒ()⇶
+
+    #
+    #  Miscellaneous tools
+    #
+    - command: &_hideMiscTools  com.harrihalttunen.fnTouchbar.hideMiscTools
+      title: "\U0001F167"
+    - command: &_rename editor.action.rename
+      title: "✎…"
+    - command: &_splitEditor workbench.action.splitEditor
+      title: "◫"
+    - command: &_togglePanel workbench.action.togglePanel
+      title: "⬓"
+    - command: &_toggleTerminal workbench.action.terminal.toggleTerminal
+      title: "$>⬓"
+    - command: &_toggleZenMode workbench.action.toggleZenMode
+      title: "▣"
+    - command: &_showCommands workbench.action.showCommands
+      title: "F1"
+
+  menus:
+    touchBar:
+      #
+      #  Navigate back and forward.
+      #
+      - command: *_navigateBack
+        group: x_10_tool@1
+        when: >
+          config.fnTouchbar.default.navigateBack
+          && !inDebugMode
+      - command: *_navigateForward
+        group: x_10_tool@2
+        when: >
+          config.fnTouchbar.default.navigateForward
+          && !inDebugMode
+
+
+      #
+      #  Group tools
+      #
+      - command: *_showDebugTools
+        group: x_20_groop_tools@1
+        when: >
+          config.fnTouchbar.all.useToolGroups
+          && !inDebugMode
+          && com.harrihalttunen.fnTouchbar.context.mainGroups
+      - command: *_showNavigationTools
+        group: x_20_groop_tools@2
+        when: >
+          config.fnTouchbar.all.useToolGroups
+          && !inDebugMode
+          && com.harrihalttunen.fnTouchbar.context.mainGroups
+      - command: *_showDefinitionTools
+        group: x_20_groop_tools@3
+        when: >
+          config.fnTouchbar.all.useToolGroups
+          && !inDebugMode
+          && com.harrihalttunen.fnTouchbar.context.mainGroups
+      - command: *_showMiscTools
+        group: x_20_groop_tools@4
+        when: >
+          config.fnTouchbar.all.useToolGroups
+          && !inDebugMode
+          && com.harrihalttunen.fnTouchbar.context.mainGroups
+
+
+      #
+      #  Debug tools
+      #
+      - command: *_hideDebugTools
+        group: x_10_tool@10001
+        when: >
+          config.fnTouchbar.all.useToolGroups
+          && !inDebugMode
+          && com.harrihalttunen.fnTouchbar.context.debugTools
+      - command: *_debugStart
+        group: x_10_tool@10002
+        when: >
+          config.fnTouchbar.debug.start
+          && !inDebugMode
+          && com.harrihalttunen.fnTouchbar.context.debugTools
+      - command: *_debugRun
+        group: x_10_tool@10003
+        when: >
+          config.fnTouchbar.debug.run
+          && !inDebugMode
+          && com.harrihalttunen.fnTouchbar.context.debugTools
+      - command: *_toggleBreakpoint
+        group: x_10_tool@10004
+        when: >
+          config.fnTouchbar.debug.toggleBreakpoint
+          && com.harrihalttunen.fnTouchbar.context.debugTools
+      - command: *_addLogPoint
+        group: x_10_tool@10005
+        when: >
+          config.fnTouchbar.debug.addLogpoint
+          && com.harrihalttunen.fnTouchbar.context.debugTools
+      - command: *_debugView
+        group: x_10_tool@10006
+        when: >
+          config.fnTouchbar.debug.debugView
+          && com.harrihalttunen.fnTouchbar.context.debugTools
+
+
+      #
+      #  Navigation tools
+      #
+      - command: *_hideNavigationTools
+        group: x_10_tool@20001
+        when: >
+          config.fnTouchbar.all.useToolGroups
+          && !inDebugMode
+          && com.harrihalttunen.fnTouchbar.context.navigationTools
+      - command: *_previousSelectionFindAction
+        group: x_10_tool@20002
+        when: >
+          config.fnTouchbar.navigation.previousSelectionFindAction
+          && !inDebugMode
+          && com.harrihalttunen.fnTouchbar.context.navigationTools
+      - command: *_nextSelectionFindAction
+        group: x_10_tool@20003
+        when: >
+          config.fnTouchbar.navigation.nextSelectionFindAction
+          && !inDebugMode
+          && com.harrihalttunen.fnTouchbar.context.navigationTools
+      - command: *_searchView
+        group: x_10_tool@20004
+        when: >
+          config.fnTouchbar.navigation.searchView
+          && !inDebugMode
+          && com.harrihalttunen.fnTouchbar.context.navigationTools
+      - command: *_prevInFiles
+        group: x_10_tool@20005
+        when: >
+          config.fnTouchbar.navigation.prevInFiles
+          && !inDebugMode
+          && com.harrihalttunen.fnTouchbar.context.navigationTools
+      - command: *_nextInFiles
+        group: x_10_tool@20006
+        when: >
+          config.fnTouchbar.navigation.nextInFiles
+          && !inDebugMode
+          && com.harrihalttunen.fnTouchbar.context.navigationTools
+      - command: *_showErrorsWarnings
+        group: x_10_tool@20007
+        when: >
+          config.fnTouchbar.navigation.showErrorsWarnings
+          && !inDebugMode
+          && com.harrihalttunen.fnTouchbar.context.navigationTools
+
+
+      #
+      #  Definition tools
+      #
+      - command: *_hideDefinitionTools
+        group: x_10_tool@30001
+        when: >
+          config.fnTouchbar.all.useToolGroups
+          && !inDebugMode
+          && com.harrihalttunen.fnTouchbar.context.definitionTools
+      - command: *_revealDefinition
+        group: x_10_tool@30002
+        when: >
+          config.fnTouchbar.definition.revealDefinition
+          && !inDebugMode
+          && com.harrihalttunen.fnTouchbar.context.definitionTools
+      - command: *_goToReferences
+        group: x_10_tool@30003
+        when: >
+          config.fnTouchbar.definition.goToReferences
+          && !inDebugMode
+          && com.harrihalttunen.fnTouchbar.context.definitionTools
+      - command: *_peekDefinition
+        group: x_10_tool@30004
+        when: >
+          config.fnTouchbar.definition.peekDefinition
+          && !inDebugMode
+          && com.harrihalttunen.fnTouchbar.context.definitionTools
+      - command: *_findReferences
+        group: x_10_tool@30005
+        when: >
+          config.fnTouchbar.definition.findReferences
+          && !inDebugMode
+          && com.harrihalttunen.fnTouchbar.context.definitionTools
+      - command: *_revealDefinitionAside
+        group: x_10_tool@30006
+        when: >
+          config.fnTouchbar.definition.revealDefinitionAside
+          && !inDebugMode
+          && com.harrihalttunen.fnTouchbar.context.definitionTools
+      - command: *_findImplementations
+        group: x_10_tool@30007
+        when: >
+          config.fnTouchbar.definition.findImplementations
+          && !inDebugMode
+          && com.harrihalttunen.fnTouchbar.context.definitionTools
+
+
+      #
+      #  Miscellaneous tools
+      #
+      - command: *_hideMiscTools
+        group: x_10_tool@90001
+        when: >
+          config.fnTouchbar.all.useToolGroups
+          && !inDebugMode
+          && com.harrihalttunen.fnTouchbar.context.miscTools
+      - command: *_rename
+        group: x_10_tool@90002
+        when: >
+          config.fnTouchbar.misc.rename
+          && !inDebugMode
+          && com.harrihalttunen.fnTouchbar.context.miscTools
+      - command: *_splitEditor
+        group: x_10_tool@90003
+        when: >
+          config.fnTouchbar.misc.splitEditor
+          && !inDebugMode
+          && com.harrihalttunen.fnTouchbar.context.miscTools
+      - command: *_togglePanel
+        group: x_10_tool@90004
+        when: >
+          config.fnTouchbar.misc.togglePanel
+          && !inDebugMode
+          && com.harrihalttunen.fnTouchbar.context.miscTools
+      - command: *_toggleTerminal
+        group: x_10_tool@90005
+        when: >
+          config.fnTouchbar.misc.toggleTerminal
+          && !inDebugMode
+          && com.harrihalttunen.fnTouchbar.context.miscTools
+      - command: *_toggleZenMode
+        group: x_10_tool@90006
+        when: >
+          config.fnTouchbar.misc.toggleZenMode
+          && !inDebugMode
+          && com.harrihalttunen.fnTouchbar.context.miscTools
+      - command: *_showCommands
+        group: x_10_tool@90007
+        when: >
+          config.fnTouchbar.misc.showCommands
+          && !inDebugMode
+          && com.harrihalttunen.fnTouchbar.context.miscTools
+
+  configuration:
+    type: object
+    title: fn Touchbar
+    properties:
+      fnTouchbar.all.useToolGroups:
+        type: boolean
+        default: false
+        markdownDescription: >
+          Sets if the tool groups are enabled or not. If tool groups are enabled then all the Touchbar tools are
+          availble (depending of other fn Touchbar settings). If this is disabled then all the selected tools are
+          visible simultaneously but the number of tools is limited about to 4 - 11 depending on other Touchbar
+          settings. **NOTICE** If this is **disabled** then you should disable `#fnTouchbar.default.navigateBack#`
+          and `#fnTouchbar.default.navigateForward#` but it is not absolutely required.
+
+      #
+      #  Navigate back and forward.
+      #
+      fnTouchbar.default.navigateBack:
+        type: boolean
+        default: false
+        markdownDescription: >
+          Enables button < (Navigate back). This creates a little bit smaller button into the Touchbar thus giving
+          more room for other buttons. This is recommened to be enabled if `workbench.action.navigateBack`
+          is disabled from Touchbar (`#keyboard.touchbar.ignored#`) or vice versa.
+          **NOTICE** this should be **disabled** if `#fnTouchbar.all.useToolGroups#` is disabled but there is
+          no harm done if this is left enabled.
+      fnTouchbar.default.navigateForward:
+        type: boolean
+        default: false
+        markdownDescription: >
+          Enables button > (Navigate forward).  This creates a little bit smaller button into the Touchbar thus giving
+          more room for other buttons. This recommened to be enabled if `workbench.action.navigateForward`
+          is disabled from Touchbar (`#keyboard.touchbar.ignored#`) or vice versa.
+          **NOTICE** this should be **disabled** if `#fnTouchbar.all.useToolGroups#` is disabled but there is
+          no harm done if this is left enabled.
+
+      #
+      #  Debug tools
+      #
+      fnTouchbar.debug.start:
+        type: boolean
+        default: false
+        markdownDescription: >
+          Enables button ▶ (Debug). This creates a little bit smaller button into the Touchbar thus giving
+          more room for other buttons. This recommened to be enabled if `workbench.action.debug.start` is disabled
+          from Touchbar (`#keyboard.touchbar.ignored#`) or vice versa.
+      fnTouchbar.debug.run:
+        type: boolean
+        default: false
+        markdownDescription: >
+          Enables button ▷ (Run). This creates a little bit smaller button into the Touchbar thus giving
+          more room for other buttons. This recommened to be enabled if `workbench.action.debug.run` is disabled
+          from Touchbar (`#keyboard.touchbar.ignored#`) or vice versa.
+      fnTouchbar.debug.toggleBreakpoint:
+        type: boolean
+        default: true
+        description: Enables button ● (Toggle breakpoint).
+      fnTouchbar.debug.addLogpoint:
+        type: boolean
+        default: false
+        description: Enables button ♦ (Add logpoint).
+      fnTouchbar.debug.debugView:
+        type: boolean
+        default: false
+        description: "Enables button ◧\U0001F41E (Show debug)."
+
+      #
+      #  Navigation tools
+      #
+      fnTouchbar.navigation.previousSelectionFindAction:
+        type: boolean
+        default: true
+        description: "Enables button ←\U0001F50D (Find previous selection)."
+      fnTouchbar.navigation.nextSelectionFindAction:
+        type: boolean
+        default: true
+        description: "Enables button \U0001F50E→ (Find next selection)."
+      fnTouchbar.navigation.searchView:
+        type: boolean
+        default: false
+        description: "Enables button ◧\U0001F50E (Show search)."
+      fnTouchbar.navigation.prevInFiles:
+        type: boolean
+        default: false
+        description: Enables button ←⚠ (Go to previous problem).
+      fnTouchbar.navigation.nextInFiles:
+        type: boolean
+        default: false
+        description: Enables button ⚠→ (Go to next problem).
+      fnTouchbar.navigation.showErrorsWarnings:
+        type: boolean
+        default: false
+        description: Enables button ⚠⬓ (Show problems).
+
+      #
+      #  Definition tools
+      #
+      fnTouchbar.definition.revealDefinition:
+        type: boolean
+        default: true
+        description: Enables button →ƒ() (Reveal definition).
+      fnTouchbar.definition.goToReferences:
+        type: boolean
+        default: false
+        description: Enables button ƒ()→ (Go to references).
+      fnTouchbar.definition.peekDefinition:
+        type: boolean
+        default: false
+        description: "Enables button \U0001F441ƒ() (Peek definition)."
+      fnTouchbar.definition.findReferences:
+        type: boolean
+        default: false
+        description: "Enables button \U0001F50Eƒ() (Find all references)."
+      fnTouchbar.definition.revealDefinitionAside:
+        type: boolean
+        default: false
+        description: Enables button ƒ()◨ (Open definition to the side).
+      fnTouchbar.definition.findImplementations:
+        type: boolean
+        default: false
+        description: Enables button ƒ()⇶ (Find all implementations).
+
+      #
+      #  Miscellaneous tools
+      #
+      fnTouchbar.misc.rename:
+        type: boolean
+        default: true
+        description: Enables button ✎… (Rename).
+      fnTouchbar.misc.splitEditor:
+        type: boolean
+        default: false
+        description: Enables button ◫ (Split editor).
+      fnTouchbar.misc.togglePanel:
+        type: boolean
+        default: false
+        description: Enables button ⬓ (Toggle panel).
+      fnTouchbar.misc.toggleTerminal:
+        type: boolean
+        default: false
+        description: Enables button $>⬓ (Toggle integrated terminal).
+      fnTouchbar.misc.toggleZenMode:
+        type: boolean
+        default: false
+        description: Enables button ▣ (Toggle zen mode).
+      fnTouchbar.misc.showCommands:
+        type: boolean
+        default: false
+        description: Enables button F1 (Show command palette).
+
+scripts:
+  vscode:prepublish: node package-yaml-to-json && npm run compile
+  compile: tsc -p ./
+  watch: tsc -watch -p ./
+  pretest: node package-yaml-to-json && npm run compile && npm run lint
+  lint: eslint src --ext ts
+  test: node ./out/test/runTest.js
+
+devDependencies:
+  "@types/vscode": "^1.52.0"
+  "@types/glob": "^7.1.3"
+  "@types/mocha": "^8.0.4"
+  "@types/node": "^12.11.7"
+  "@typescript-eslint/eslint-plugin": "^4.9.0"
+  "@typescript-eslint/parser": "^4.9.0"
+  eslint: "^7.15.0"
+  glob: "^7.1.6"
+  mocha: "^8.1.3"
+  js-yaml: 3.14.1
+  typescript: "^4.1.2"
+  vscode-test: "^1.4.1"
+

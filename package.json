@@ -1,221 +1,494 @@
 {
-	"name": "fn-touchbar",
-	"displayName": "Fn Touchbar",
-	"description": "The most common function keys are put directly to Touchbar.",
-	"publisher": "Hapi",
-	"repository": "https://github.com/hapi/fn-touchbar",
-	"version": "1.0.0",
-	"engines": {
-		"vscode": "^1.52.0"
-	},
-	"categories": [
-		"Other"
-	],
-	"activationEvents": [
-		"*"
-	],
-	"main": "./out/extension.js",
-	"contributes": {
-		"commands": [
-			{
-				"command": "com.harrihalttunen.fnTouchbar.action.navigateBack",
-				"title": "<"
-			},
-			{
-				"command": "com.harrihalttunen.fnTouchbar.action.navigateForward",
-				"title": ">"
-			},
-			{
-				"command": "editor.action.revealDefinition",
-				"title": "→ƒ()"
-			},
-			{
-				"command": "editor.action.goToReferences",
-				"title": "ƒ()→"
-			},
-			{
-				"command": "editor.action.peekDefinition",
-				"title": "👁ƒ()"
-			},
-			{
-				"command": "com.harrihalttunen.fnTouchbar.debug.start",
-				"title": "▶"
-			},
-			{
-				"command": "com.harrihalttunen.fnTouchbar.debug.run",
-				"title": "▷"
-			},
-			{
-				"command": "editor.debug.action.toggleBreakpoint",
-				"title": "●"
-			},
-			{
-				"command": "editor.debug.action.addLogPoint",
-				"title": "♦"
-			},
-			{
-				"command": "editor.action.previousMatchFindAction",
-				"title": "←🔍"
-			},
-			{
-				"command": "editor.action.nextMatchFindAction",
-				"title": "🔎→"
-			},
-			{
-				"command": "editor.action.rename",
-				"title": "✎…"
-			}
-		],
-		"menus": {
-			"touchBar": [
-				{
-					"command": "com.harrihalttunen.fnTouchbar.action.navigateBack",
-					"group": "_navigation@1",
-					"when": "config.fnTouchBar.navigateBack && !inDebugMode && editorFocus"
-				},
-				{
-					"command": "com.harrihalttunen.fnTouchbar.action.navigateForward",
-					"group": "_navigation@2",
-					"when": "config.fnTouchBar.navigateForward && !inDebugMode && editorFocus"
-				},
-				{
-					"command": "editor.action.revealDefinition",
-					"group": "_navigation@3",
-					"when": "config.fnTouchBar.revealDefinition && !inDebugMode && editorFocus"
-				},
-				{
-					"command": "editor.action.goToReferences",
-					"group": "_navigation@4",
-					"when": "config.fnTouchBar.goToReferences && !inDebugMode && editorFocus"
-				},
-				{
-					"command": "editor.action.peekDefinition",
-					"group": "_navigation@5",
-					"when": "config.fnTouchBar.peekDefinition && !inDebugMode && editorFocus"
-				},
-				{
-					"command": "com.harrihalttunen.fnTouchbar.debug.start",
-					"group": "debug@1",
-					"when": "config.fnTouchBar.debug.start && !inDebugMode && editorFocus"
-				},
-				{
-					"command": "com.harrihalttunen.fnTouchbar.debug.run",
-					"group": "debug@2",
-					"when": "config.fnTouchBar.debug.run && !inDebugMode && editorFocus"
-				},
-				{
-					"command": "editor.debug.action.toggleBreakpoint",
-					"group": "debug@3",
-					"when": "config.fnTouchBar.toggleBreakpoint && editorFocus"
-				},
-				{
-					"command": "editor.debug.action.addLogPoint",
-					"group": "debug@4",
-					"when": "config.fnTouchBar.addLogpoint && editorFocus"
-				},
-				{
-					"command": "editor.action.previousMatchFindAction",
-					"group": "editing@1",
-					"when": "config.fnTouchBar.previousMatchFindAction && !inDebugMode && editorFocus"
-				},
-				{
-					"command": "editor.action.nextMatchFindAction",
-					"group": "editing@2",
-					"when": "config.fnTouchBar.nextMatchFindAction && !inDebugMode && editorFocus"
-				},
-				{
-					"command": "editor.action.rename",
-					"group": "editing@3",
-					"when": "config.fnTouchBar.rename && !inDebugMode && editorFocus"
-				}
-			]
-		},
-		"configuration": {
-			"type": "object",
-			"title": "FnTouchBar",
-			"properties": {
-				"fnTouchBar.navigateBack": {
-					"type": "boolean",
-					"default": true,
-					"markdownDescription": "Enables button < (Navigate back) if not in debug mode. This should be enabled if `workbench.action.navigateBack` is disabled from Touchbar (Settings > Application > Keyboard > Touchbar:Ignored) or vice versa."
-				},
-				"fnTouchBar.navigateForward": {
-					"type": "boolean",
-					"default": true,
-					"markdownDescription": "Enables button > (Navigate forward) if not in debug mode. This should be enabled if `workbench.action.navigateForward` is disabled from Touchbar (Settings > Application > Keyboard > Touchbar:Ignored) or vice versa."
-				},
-				"fnTouchBar.revealDefinition": {
-					"type": "boolean",
-					"default": true,
-					"description": "Enables button →ƒ() (Reveal definition) if not in debug mode."
-				},
-				"fnTouchBar.goToReferences": {
-					"type": "boolean",
-					"default": true,
-					"description": "Enables button ƒ()→ (Go to references) if not in debug mode."
-				},
-				"fnTouchBar.peekDefinition": {
-					"type": "boolean",
-					"default": false,
-					"description": "Enables button 👁ƒ() (Peek definition) if not in debug mode."
-				},
-				"fnTouchBar.debug.start": {
-					"type": "boolean",
-					"default": true,
-					"markdownDescription": "Enables button ▶ (Debug) if not in debug mode. This should be enabled if `workbench.action.debug.start` is disabled from Touchbar (Settings > Application > Keyboard > Touchbar:Ignored) or vice versa."
-				},
-				"fnTouchBar.debug.run": {
-					"type": "boolean",
-					"default": true,
-					"markdownDescription": "Enables button ▷ (Run) if not in debug mode. This should be enabled if `workbench.action.debug.run` is disabled from Touchbar (Settings > Application > Keyboard > Touchbar:Ignored) or vice versa."
-				},
-				"fnTouchBar.toggleBreakpoint": {
-					"type": "boolean",
-					"default": true,
-					"description": "Enables button ● (Toggle breakpoint) if text is focused."
-				},
-				"fnTouchBar.addLogpoint": {
-					"type": "boolean",
-					"default": true,
-					"description": "Enables button ♦ (Add logpoint) if text is focused."
-				},
-				"fnTouchBar.previousMatchFindAction": {
-					"type": "boolean",
-					"default": true,
-					"description": "Enables button ←🔍 (Find previous) if not in debug mode."
-				},
-				"fnTouchBar.nextMatchFindAction": {
-					"type": "boolean",
-					"default": true,
-					"description": "Enables button 🔎→ (Find next) if not in debug mode."
-				},
-				"fnTouchBar.rename": {
-					"type": "boolean",
-					"default": true,
-					"description": "Enables button ✎… (Rename) if not in debug mode."
-				}
-			}
-		}
-	},
-	"scripts": {
-		"vscode:prepublish": "npm run compile",
-		"compile": "tsc -p ./",
-		"watch": "tsc -watch -p ./",
-		"pretest": "npm run compile && npm run lint",
-		"lint": "eslint src --ext ts",
-		"test": "node ./out/test/runTest.js"
-	},
-	"devDependencies": {
-		"@types/vscode": "^1.52.0",
-		"@types/glob": "^7.1.3",
-		"@types/mocha": "^8.0.4",
-		"@types/node": "^12.11.7",
-		"eslint": "^7.15.0",
-		"@typescript-eslint/eslint-plugin": "^4.9.0",
-		"@typescript-eslint/parser": "^4.9.0",
-		"glob": "^7.1.6",
-		"mocha": "^8.1.3",
-		"typescript": "^4.1.2",
-		"vscode-test": "^1.4.1"
-	}
+    "name": "fn-touchbar",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/hapi/fn-touchbar"
+    },
+    "version": "1.0.0",
+    "lisence": "MIT",
+    "displayName": "fn Touchbar",
+    "description": "The most common function keys (and some others) are put directly to Touchbar.",
+    "publisher": "Hapi",
+    "icon": "fn-touchbar.png",
+    "keywords": [
+        "Touchbar",
+        "touch bar",
+        "Macbook Pro",
+        "function keys",
+        "vscode",
+        "visual studio code"
+    ],
+    "engines": {
+        "vscode": "^1.52.0"
+    },
+    "categories": [
+        "Other"
+    ],
+    "activationEvents": [
+        "*"
+    ],
+    "main": "./out/extension.js",
+    "contributes": {
+        "commands": [
+            {
+                "command": "com.harrihalttunen.fnTouchbar.action.navigateBack",
+                "title": "<"
+            },
+            {
+                "command": "com.harrihalttunen.fnTouchbar.action.navigateForward",
+                "title": ">"
+            },
+            {
+                "command": "com.harrihalttunen.fnTouchbar.showDebugTools",
+                "title": "🐞"
+            },
+            {
+                "command": "com.harrihalttunen.fnTouchbar.showNavigationTools",
+                "title": "⎈"
+            },
+            {
+                "command": "com.harrihalttunen.fnTouchbar.showDefinitionTools",
+                "title": "ƒ()"
+            },
+            {
+                "command": "com.harrihalttunen.fnTouchbar.showMiscTools",
+                "title": "⋯"
+            },
+            {
+                "command": "com.harrihalttunen.fnTouchbar.hideDebugTools",
+                "title": "🅧"
+            },
+            {
+                "command": "com.harrihalttunen.fnTouchbar.debug.start",
+                "title": "▶"
+            },
+            {
+                "command": "com.harrihalttunen.fnTouchbar.debug.run",
+                "title": "▷"
+            },
+            {
+                "command": "editor.debug.action.toggleBreakpoint",
+                "title": "●"
+            },
+            {
+                "command": "editor.debug.action.addLogPoint",
+                "title": "♦"
+            },
+            {
+                "command": "workbench.view.debug",
+                "title": "◧🐞"
+            },
+            {
+                "command": "com.harrihalttunen.fnTouchbar.hideNavigationTools",
+                "title": "🅧"
+            },
+            {
+                "command": "editor.action.previousSelectionMatchFindAction",
+                "title": "←🔍"
+            },
+            {
+                "command": "editor.action.nextMatchFindAction",
+                "title": "🔎→"
+            },
+            {
+                "command": "workbench.view.search",
+                "title": "◧🔎"
+            },
+            {
+                "command": "editor.action.marker.prevInFiles",
+                "title": "←⚠"
+            },
+            {
+                "command": "editor.action.marker.nextInFiles",
+                "title": "⚠→"
+            },
+            {
+                "command": "workbench.action.showErrorsWarnings",
+                "title": "⚠⬓"
+            },
+            {
+                "command": "com.harrihalttunen.fnTouchbar.hideDefinitionTools",
+                "title": "🅧"
+            },
+            {
+                "command": "editor.action.revealDefinition",
+                "title": "→ƒ()"
+            },
+            {
+                "command": "editor.action.goToReferences",
+                "title": "ƒ()→"
+            },
+            {
+                "command": "editor.action.peekDefinition",
+                "title": "👁ƒ()"
+            },
+            {
+                "command": "references-view.findReferences",
+                "title": "🔎ƒ()"
+            },
+            {
+                "command": "editor.action.revealDefinitionAside",
+                "title": "ƒ()◨"
+            },
+            {
+                "command": "references-view.findImplementations",
+                "title": "ƒ()⇶"
+            },
+            {
+                "command": "com.harrihalttunen.fnTouchbar.hideMiscTools",
+                "title": "🅧"
+            },
+            {
+                "command": "editor.action.rename",
+                "title": "✎…"
+            },
+            {
+                "command": "workbench.action.splitEditor",
+                "title": "◫"
+            },
+            {
+                "command": "workbench.action.togglePanel",
+                "title": "⬓"
+            },
+            {
+                "command": "workbench.action.terminal.toggleTerminal",
+                "title": "$>⬓"
+            },
+            {
+                "command": "workbench.action.toggleZenMode",
+                "title": "▣"
+            },
+            {
+                "command": "workbench.action.showCommands",
+                "title": "F1"
+            }
+        ],
+        "menus": {
+            "touchBar": [
+                {
+                    "command": "com.harrihalttunen.fnTouchbar.action.navigateBack",
+                    "group": "x_10_tool@1",
+                    "when": "config.fnTouchbar.default.navigateBack && !inDebugMode\n"
+                },
+                {
+                    "command": "com.harrihalttunen.fnTouchbar.action.navigateForward",
+                    "group": "x_10_tool@2",
+                    "when": "config.fnTouchbar.default.navigateForward && !inDebugMode\n"
+                },
+                {
+                    "command": "com.harrihalttunen.fnTouchbar.showDebugTools",
+                    "group": "x_20_groop_tools@1",
+                    "when": "config.fnTouchbar.all.useToolGroups && !inDebugMode && com.harrihalttunen.fnTouchbar.context.mainGroups\n"
+                },
+                {
+                    "command": "com.harrihalttunen.fnTouchbar.showNavigationTools",
+                    "group": "x_20_groop_tools@2",
+                    "when": "config.fnTouchbar.all.useToolGroups && !inDebugMode && com.harrihalttunen.fnTouchbar.context.mainGroups\n"
+                },
+                {
+                    "command": "com.harrihalttunen.fnTouchbar.showDefinitionTools",
+                    "group": "x_20_groop_tools@3",
+                    "when": "config.fnTouchbar.all.useToolGroups && !inDebugMode && com.harrihalttunen.fnTouchbar.context.mainGroups\n"
+                },
+                {
+                    "command": "com.harrihalttunen.fnTouchbar.showMiscTools",
+                    "group": "x_20_groop_tools@4",
+                    "when": "config.fnTouchbar.all.useToolGroups && !inDebugMode && com.harrihalttunen.fnTouchbar.context.mainGroups\n"
+                },
+                {
+                    "command": "com.harrihalttunen.fnTouchbar.hideDebugTools",
+                    "group": "x_10_tool@10001",
+                    "when": "config.fnTouchbar.all.useToolGroups && !inDebugMode && com.harrihalttunen.fnTouchbar.context.debugTools\n"
+                },
+                {
+                    "command": "com.harrihalttunen.fnTouchbar.debug.start",
+                    "group": "x_10_tool@10002",
+                    "when": "config.fnTouchbar.debug.start && !inDebugMode && com.harrihalttunen.fnTouchbar.context.debugTools\n"
+                },
+                {
+                    "command": "com.harrihalttunen.fnTouchbar.debug.run",
+                    "group": "x_10_tool@10003",
+                    "when": "config.fnTouchbar.debug.run && !inDebugMode && com.harrihalttunen.fnTouchbar.context.debugTools\n"
+                },
+                {
+                    "command": "editor.debug.action.toggleBreakpoint",
+                    "group": "x_10_tool@10004",
+                    "when": "config.fnTouchbar.debug.toggleBreakpoint && com.harrihalttunen.fnTouchbar.context.debugTools\n"
+                },
+                {
+                    "command": "editor.debug.action.addLogPoint",
+                    "group": "x_10_tool@10005",
+                    "when": "config.fnTouchbar.debug.addLogpoint && com.harrihalttunen.fnTouchbar.context.debugTools\n"
+                },
+                {
+                    "command": "workbench.view.debug",
+                    "group": "x_10_tool@10006",
+                    "when": "config.fnTouchbar.debug.debugView && com.harrihalttunen.fnTouchbar.context.debugTools\n"
+                },
+                {
+                    "command": "com.harrihalttunen.fnTouchbar.hideNavigationTools",
+                    "group": "x_10_tool@20001",
+                    "when": "config.fnTouchbar.all.useToolGroups && !inDebugMode && com.harrihalttunen.fnTouchbar.context.navigationTools\n"
+                },
+                {
+                    "command": "editor.action.previousSelectionMatchFindAction",
+                    "group": "x_10_tool@20002",
+                    "when": "config.fnTouchbar.navigation.previousSelectionFindAction && !inDebugMode && com.harrihalttunen.fnTouchbar.context.navigationTools\n"
+                },
+                {
+                    "command": "editor.action.nextMatchFindAction",
+                    "group": "x_10_tool@20003",
+                    "when": "config.fnTouchbar.navigation.nextSelectionFindAction && !inDebugMode && com.harrihalttunen.fnTouchbar.context.navigationTools\n"
+                },
+                {
+                    "command": "workbench.view.search",
+                    "group": "x_10_tool@20004",
+                    "when": "config.fnTouchbar.navigation.searchView && !inDebugMode && com.harrihalttunen.fnTouchbar.context.navigationTools\n"
+                },
+                {
+                    "command": "editor.action.marker.prevInFiles",
+                    "group": "x_10_tool@20005",
+                    "when": "config.fnTouchbar.navigation.prevInFiles && !inDebugMode && com.harrihalttunen.fnTouchbar.context.navigationTools\n"
+                },
+                {
+                    "command": "editor.action.marker.nextInFiles",
+                    "group": "x_10_tool@20006",
+                    "when": "config.fnTouchbar.navigation.nextInFiles && !inDebugMode && com.harrihalttunen.fnTouchbar.context.navigationTools\n"
+                },
+                {
+                    "command": "workbench.action.showErrorsWarnings",
+                    "group": "x_10_tool@20007",
+                    "when": "config.fnTouchbar.navigation.showErrorsWarnings && !inDebugMode && com.harrihalttunen.fnTouchbar.context.navigationTools\n"
+                },
+                {
+                    "command": "com.harrihalttunen.fnTouchbar.hideDefinitionTools",
+                    "group": "x_10_tool@30001",
+                    "when": "config.fnTouchbar.all.useToolGroups && !inDebugMode && com.harrihalttunen.fnTouchbar.context.definitionTools\n"
+                },
+                {
+                    "command": "editor.action.revealDefinition",
+                    "group": "x_10_tool@30002",
+                    "when": "config.fnTouchbar.definition.revealDefinition && !inDebugMode && com.harrihalttunen.fnTouchbar.context.definitionTools\n"
+                },
+                {
+                    "command": "editor.action.goToReferences",
+                    "group": "x_10_tool@30003",
+                    "when": "config.fnTouchbar.definition.goToReferences && !inDebugMode && com.harrihalttunen.fnTouchbar.context.definitionTools\n"
+                },
+                {
+                    "command": "editor.action.peekDefinition",
+                    "group": "x_10_tool@30004",
+                    "when": "config.fnTouchbar.definition.peekDefinition && !inDebugMode && com.harrihalttunen.fnTouchbar.context.definitionTools\n"
+                },
+                {
+                    "command": "references-view.findReferences",
+                    "group": "x_10_tool@30005",
+                    "when": "config.fnTouchbar.definition.findReferences && !inDebugMode && com.harrihalttunen.fnTouchbar.context.definitionTools\n"
+                },
+                {
+                    "command": "editor.action.revealDefinitionAside",
+                    "group": "x_10_tool@30006",
+                    "when": "config.fnTouchbar.definition.revealDefinitionAside && !inDebugMode && com.harrihalttunen.fnTouchbar.context.definitionTools\n"
+                },
+                {
+                    "command": "references-view.findImplementations",
+                    "group": "x_10_tool@30007",
+                    "when": "config.fnTouchbar.definition.findImplementations && !inDebugMode && com.harrihalttunen.fnTouchbar.context.definitionTools\n"
+                },
+                {
+                    "command": "com.harrihalttunen.fnTouchbar.hideMiscTools",
+                    "group": "x_10_tool@90001",
+                    "when": "config.fnTouchbar.all.useToolGroups && !inDebugMode && com.harrihalttunen.fnTouchbar.context.miscTools\n"
+                },
+                {
+                    "command": "editor.action.rename",
+                    "group": "x_10_tool@90002",
+                    "when": "config.fnTouchbar.misc.rename && !inDebugMode && com.harrihalttunen.fnTouchbar.context.miscTools\n"
+                },
+                {
+                    "command": "workbench.action.splitEditor",
+                    "group": "x_10_tool@90003",
+                    "when": "config.fnTouchbar.misc.splitEditor && !inDebugMode && com.harrihalttunen.fnTouchbar.context.miscTools\n"
+                },
+                {
+                    "command": "workbench.action.togglePanel",
+                    "group": "x_10_tool@90004",
+                    "when": "config.fnTouchbar.misc.togglePanel && !inDebugMode && com.harrihalttunen.fnTouchbar.context.miscTools\n"
+                },
+                {
+                    "command": "workbench.action.terminal.toggleTerminal",
+                    "group": "x_10_tool@90005",
+                    "when": "config.fnTouchbar.misc.toggleTerminal && !inDebugMode && com.harrihalttunen.fnTouchbar.context.miscTools\n"
+                },
+                {
+                    "command": "workbench.action.toggleZenMode",
+                    "group": "x_10_tool@90006",
+                    "when": "config.fnTouchbar.misc.toggleZenMode && !inDebugMode && com.harrihalttunen.fnTouchbar.context.miscTools\n"
+                },
+                {
+                    "command": "workbench.action.showCommands",
+                    "group": "x_10_tool@90007",
+                    "when": "config.fnTouchbar.misc.showCommands && !inDebugMode && com.harrihalttunen.fnTouchbar.context.miscTools\n"
+                }
+            ]
+        },
+        "configuration": {
+            "type": "object",
+            "title": "fn Touchbar",
+            "properties": {
+                "fnTouchbar.all.useToolGroups": {
+                    "type": "boolean",
+                    "default": false,
+                    "markdownDescription": "Sets if the tool groups are enabled or not. If tool groups are enabled then all the Touchbar tools are availble (depending of other fn Touchbar settings). If this is disabled then all the selected tools are visible simultaneously but the number of tools is limited about to 4 - 11 depending on other Touchbar settings. **NOTICE** If this is **disabled** then you should disable `#fnTouchbar.default.navigateBack#` and `#fnTouchbar.default.navigateForward#` but it is not absolutely required.\n"
+                },
+                "fnTouchbar.default.navigateBack": {
+                    "type": "boolean",
+                    "default": false,
+                    "markdownDescription": "Enables button < (Navigate back). This creates a little bit smaller button into the Touchbar thus giving more room for other buttons. This is recommened to be enabled if `workbench.action.navigateBack` is disabled from Touchbar (`#keyboard.touchbar.ignored#`) or vice versa. **NOTICE** this should be **disabled** if `#fnTouchbar.all.useToolGroups#` is disabled but there is no harm done if this is left enabled.\n"
+                },
+                "fnTouchbar.default.navigateForward": {
+                    "type": "boolean",
+                    "default": false,
+                    "markdownDescription": "Enables button > (Navigate forward).  This creates a little bit smaller button into the Touchbar thus giving more room for other buttons. This recommened to be enabled if `workbench.action.navigateForward` is disabled from Touchbar (`#keyboard.touchbar.ignored#`) or vice versa. **NOTICE** this should be **disabled** if `#fnTouchbar.all.useToolGroups#` is disabled but there is no harm done if this is left enabled.\n"
+                },
+                "fnTouchbar.debug.start": {
+                    "type": "boolean",
+                    "default": false,
+                    "markdownDescription": "Enables button ▶ (Debug). This creates a little bit smaller button into the Touchbar thus giving more room for other buttons. This recommened to be enabled if `workbench.action.debug.start` is disabled from Touchbar (`#keyboard.touchbar.ignored#`) or vice versa.\n"
+                },
+                "fnTouchbar.debug.run": {
+                    "type": "boolean",
+                    "default": false,
+                    "markdownDescription": "Enables button ▷ (Run). This creates a little bit smaller button into the Touchbar thus giving more room for other buttons. This recommened to be enabled if `workbench.action.debug.run` is disabled from Touchbar (`#keyboard.touchbar.ignored#`) or vice versa.\n"
+                },
+                "fnTouchbar.debug.toggleBreakpoint": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "Enables button ● (Toggle breakpoint)."
+                },
+                "fnTouchbar.debug.addLogpoint": {
+                    "type": "boolean",
+                    "default": false,
+                    "description": "Enables button ♦ (Add logpoint)."
+                },
+                "fnTouchbar.debug.debugView": {
+                    "type": "boolean",
+                    "default": false,
+                    "description": "Enables button ◧🐞 (Show debug)."
+                },
+                "fnTouchbar.navigation.previousSelectionFindAction": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "Enables button ←🔍 (Find previous selection)."
+                },
+                "fnTouchbar.navigation.nextSelectionFindAction": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "Enables button 🔎→ (Find next selection)."
+                },
+                "fnTouchbar.navigation.searchView": {
+                    "type": "boolean",
+                    "default": false,
+                    "description": "Enables button ◧🔎 (Show search)."
+                },
+                "fnTouchbar.navigation.prevInFiles": {
+                    "type": "boolean",
+                    "default": false,
+                    "description": "Enables button ←⚠ (Go to previous problem)."
+                },
+                "fnTouchbar.navigation.nextInFiles": {
+                    "type": "boolean",
+                    "default": false,
+                    "description": "Enables button ⚠→ (Go to next problem)."
+                },
+                "fnTouchbar.navigation.showErrorsWarnings": {
+                    "type": "boolean",
+                    "default": false,
+                    "description": "Enables button ⚠⬓ (Show problems)."
+                },
+                "fnTouchbar.definition.revealDefinition": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "Enables button →ƒ() (Reveal definition)."
+                },
+                "fnTouchbar.definition.goToReferences": {
+                    "type": "boolean",
+                    "default": false,
+                    "description": "Enables button ƒ()→ (Go to references)."
+                },
+                "fnTouchbar.definition.peekDefinition": {
+                    "type": "boolean",
+                    "default": false,
+                    "description": "Enables button 👁ƒ() (Peek definition)."
+                },
+                "fnTouchbar.definition.findReferences": {
+                    "type": "boolean",
+                    "default": false,
+                    "description": "Enables button 🔎ƒ() (Find all references)."
+                },
+                "fnTouchbar.definition.revealDefinitionAside": {
+                    "type": "boolean",
+                    "default": false,
+                    "description": "Enables button ƒ()◨ (Open definition to the side)."
+                },
+                "fnTouchbar.definition.findImplementations": {
+                    "type": "boolean",
+                    "default": false,
+                    "description": "Enables button ƒ()⇶ (Find all implementations)."
+                },
+                "fnTouchbar.misc.rename": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "Enables button ✎… (Rename)."
+                },
+                "fnTouchbar.misc.splitEditor": {
+                    "type": "boolean",
+                    "default": false,
+                    "description": "Enables button ◫ (Split editor)."
+                },
+                "fnTouchbar.misc.togglePanel": {
+                    "type": "boolean",
+                    "default": false,
+                    "description": "Enables button ⬓ (Toggle panel)."
+                },
+                "fnTouchbar.misc.toggleTerminal": {
+                    "type": "boolean",
+                    "default": false,
+                    "description": "Enables button $>⬓ (Toggle integrated terminal)."
+                },
+                "fnTouchbar.misc.toggleZenMode": {
+                    "type": "boolean",
+                    "default": false,
+                    "description": "Enables button ▣ (Toggle zen mode)."
+                },
+                "fnTouchbar.misc.showCommands": {
+                    "type": "boolean",
+                    "default": false,
+                    "description": "Enables button F1 (Show command palette)."
+                }
+            }
+        }
+    },
+    "scripts": {
+        "vscode:prepublish": "node package-yaml-to-json && npm run compile",
+        "compile": "tsc -p ./",
+        "watch": "tsc -watch -p ./",
+        "pretest": "node package-yaml-to-json && npm run compile && npm run lint",
+        "lint": "eslint src --ext ts",
+        "test": "node ./out/test/runTest.js"
+    },
+    "devDependencies": {
+        "@types/vscode": "^1.52.0",
+        "@types/glob": "^7.1.3",
+        "@types/mocha": "^8.0.4",
+        "@types/node": "^12.11.7",
+        "@typescript-eslint/eslint-plugin": "^4.9.0",
+        "@typescript-eslint/parser": "^4.9.0",
+        "eslint": "^7.15.0",
+        "glob": "^7.1.6",
+        "mocha": "^8.1.3",
+        "js-yaml": "3.14.1",
+        "typescript": "^4.1.2",
+        "vscode-test": "^1.4.1"
+    }
 }
