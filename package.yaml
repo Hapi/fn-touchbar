@@ -347,11 +347,13 @@ contributes:
         type: boolean
         default: false
         markdownDescription: >
-          Sets if the tool groups are enabled or not. If tool groups are enabled then all the Touchbar tools are
-          availble (depending of other fn Touchbar settings). If this is disabled then all the selected tools are
+          Sets if the tool groups are enabled or not. If this is disabled then all the selected tools are
           visible simultaneously but the number of tools is limited about to 4 - 11 depending on other Touchbar
-          settings. **NOTICE** If this is **disabled** then you should disable `#fnTouchbar.default.navigateBack#`
-          and `#fnTouchbar.default.navigateForward#` but it is not absolutely required.
+          settings. If none of tools are not shown star disabling command buttons till other command start to
+          appear in Touchbar. If tool groups are enabled then more of the fn Touchbar tools (possibly all of them
+          depending on other Touchbar settings) can be added to Touchbar and they are available behind group buttons.
+          See also `#fnTouchbar.default.navigateBack#`, `#fnTouchbar.default.navigateForward#`, `#fnTouchbar.debug.start#`
+          and `#fnTouchbar.debug.run#` settings to get out the most of fn Touchbar.
 
       #
       #  Navigate back and forward.
@@ -363,8 +365,6 @@ contributes:
           Enables button < (Navigate back). This creates a little bit smaller button into the Touchbar thus giving
           more room for other buttons. This is recommened to be enabled if `workbench.action.navigateBack`
           is disabled from Touchbar (`#keyboard.touchbar.ignored#`) or vice versa.
-          **NOTICE** this should be **disabled** if `#fnTouchbar.all.useToolGroups#` is disabled but there is
-          no harm done if this is left enabled.
       fnTouchbar.default.navigateForward:
         type: boolean
         default: false
@@ -372,8 +372,6 @@ contributes:
           Enables button > (Navigate forward).  This creates a little bit smaller button into the Touchbar thus giving
           more room for other buttons. This recommened to be enabled if `workbench.action.navigateForward`
           is disabled from Touchbar (`#keyboard.touchbar.ignored#`) or vice versa.
-          **NOTICE** this should be **disabled** if `#fnTouchbar.all.useToolGroups#` is disabled but there is
-          no harm done if this is left enabled.
 
       #
       #  Debug tools

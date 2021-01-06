@@ -28,7 +28,9 @@ As you can see, you are able to disable Visual Studio Code default buttons to ge
 **Important** If `fnTouchbar.all.useToolGroups` is disabled then tool groups are not shown but only selected command
 buttons are shown instead.
 
-*⚠️* If too many command buttons are enabled none of them are shown in Touchbar.
+***⚠️* If too many command buttons are enabled none of them are shown in Touchbar** as they all do not fit to Touchbar
+at the same time. To fix the problem disable enough command buttons so that the other buttons start to be visible
+in Touchbar.
 
 
 | No group command | Icon | Description |
@@ -79,16 +81,16 @@ buttons are shown instead.
 fn Touchbar allows you to enable each button individually no matter if groups are in effect or not. You are able
 to disable Visual Studio Code default buttons to get more room for fn Touchbar buttons.
 
-* `fnTouchbar.all.useToolGroups`, (default `false`) Sets if the tool groups are enabled or not. If tool groups are enabled then all the Touchbar tools are availble (depending of other fn Touchbar settings). If this is disabled then all the selected tools are visible simultaneously but the number of tools is limited about to 4 - 11 depending on other Touchbar settings. **NOTICE** If this is **disabled** then you should disable `#fnTouchbar.default.navigateBack#` and `#fnTouchbar.default.navigateForward#` but it is not absolutely required.
-* `fnTouchbar.default.navigateBack`, (default `false`) Enables button < (Navigate back). This creates a little bit smaller button into the Touchbar thus giving more room for other buttons. This is recommened to be enabled if `workbench.action.navigateBack` is disabled from Touchbar (`#keyboard.touchbar.ignored#`) or vice versa. **NOTICE** this should be **disabled** if `#fnTouchbar.all.useToolGroups#` is disabled but there is no harm done if this is left enabled.
-* `fnTouchbar.default.navigateForward`, (default `false`) Enables button > (Navigate forward).  This creates a little bit smaller button into the Touchbar thus giving more room for other buttons. This recommened to be enabled if `workbench.action.navigateForward` is disabled from Touchbar (`#keyboard.touchbar.ignored#`) or vice versa. **NOTICE** this should be **disabled** if `#fnTouchbar.all.useToolGroups#` is disabled but there is no harm done if this is left enabled.
+* `fnTouchbar.all.useToolGroups`, (default `false`) Sets if the tool groups are enabled or not. If this is disabled then all the selected tools are visible simultaneously but the number of tools is limited about to 4 - 11 depending on other Touchbar settings. If none of tools are not shown star disabling command buttons till other command start to appear in Touchbar. If tool groups are enabled then more of the fn Touchbar tools (possibly all of them depending on other Touchbar settings) can be added to Touchbar and they are available behind group buttons. See also `#fnTouchbar.default.navigateBack#`, `#fnTouchbar.default.navigateForward#`, `#fnTouchbar.debug.start#` and `#fnTouchbar.debug.run#` settings to get out the most of fn Touchbar.
+* `fnTouchbar.default.navigateBack`, (default `false`) Enables button < (Navigate back). This creates a little bit smaller button into the Touchbar thus giving more room for other buttons. This is recommened to be enabled if `workbench.action.navigateBack` is disabled from Touchbar (`#keyboard.touchbar.ignored#`) or vice versa.
+* `fnTouchbar.default.navigateForward`, (default `false`) Enables button > (Navigate forward).  This creates a little bit smaller button into the Touchbar thus giving more room for other buttons. This recommened to be enabled if `workbench.action.navigateForward` is disabled from Touchbar (`#keyboard.touchbar.ignored#`) or vice versa.
 * `fnTouchbar.debug.start`, (default `false`) Enables button ▶ (Debug). This creates a little bit smaller button into the Touchbar thus giving more room for other buttons. This recommened to be enabled if `workbench.action.debug.start` is disabled from Touchbar (`#keyboard.touchbar.ignored#`) or vice versa.
 * `fnTouchbar.debug.run`, (default `false`) Enables button ▷ (Run). This creates a little bit smaller button into the Touchbar thus giving more room for other buttons. This recommened to be enabled if `workbench.action.debug.run` is disabled from Touchbar (`#keyboard.touchbar.ignored#`) or vice versa.
 * `fnTouchbar.debug.toggleBreakpoint`, (default `true`) Enables button ● (Toggle breakpoint).
 * `fnTouchbar.debug.addLogpoint`, (default `false`) Enables button ♦ (Add logpoint).
 * `fnTouchbar.debug.debugView`, (default `false`) Enables button ◧🐞 (Show debug).
-* `fnTouchbar.navigation.previousSelectionFindAction`, (default `true`) Enables button ←🔍 (Find previous).
-* `fnTouchbar.navigation.nextSelectionFindAction`, (default `true`) Enables button 🔎→ (Find next).
+* `fnTouchbar.navigation.previousSelectionFindAction`, (default `true`) Enables button ←🔍 (Find previous selection).
+* `fnTouchbar.navigation.nextSelectionFindAction`, (default `true`) Enables button 🔎→ (Find next selection).
 * `fnTouchbar.navigation.searchView`, (default `false`) Enables button ◧🔎 (Show search).
 * `fnTouchbar.navigation.prevInFiles`, (default `false`) Enables button ←⚠ (Go to previous problem).
 * `fnTouchbar.navigation.nextInFiles`, (default `false`) Enables button ⚠→ (Go to next problem).
@@ -144,7 +146,7 @@ default command buttons by adding the following settings to `settings.json`:
 
 ### Enable all command buttons with groups
 
-1. Disable Visual Code Studio navigation buttons:
+1. Disable Visual Code Studio debug buttons (Start and Run commands):
 ```json
     "keyboard.touchbar.ignored": [
         "workbench.action.debug.start",

@@ -15,9 +15,9 @@ const MISC_TOOLS = CONTEXT + "miscTools";
 
 export function activate(this: any, context: vscode.ExtensionContext)
 {
-	getSettings();
+	updateToolGroups();
 	context.subscriptions.push(
-		vscode.workspace.onDidChangeConfiguration(getSettings, this),
+		vscode.workspace.onDidChangeConfiguration(updateToolGroups, this),
 		registerGroupCommand(
 			DEBUG_TOOLS,
 			"DebugTools"
@@ -49,7 +49,7 @@ export function activate(this: any, context: vscode.ExtensionContext)
 	);
 }
 
-function getSettings(): vscode.WorkspaceConfiguration
+function updateToolGroups(): vscode.WorkspaceConfiguration
 {
 	const settings = vscode.workspace.getConfiguration(NAME);
 
@@ -72,7 +72,7 @@ function registerGroupCommand(
 	let retVal: any[] =
 		[
 			vscode.commands.registerCommand(QNAME + "show" + commandGroupName, () => {
-				const settings: vscode.WorkspaceConfiguration = getSettings();
+				const settings: vscode.WorkspaceConfiguration = vscode.workspace.getConfiguration(NAME);
 				if(settings.all.useToolGroups) {
 					hideAllToolGroups(currentToolGroup);
 					showToolGroup(currentToolGroup);
